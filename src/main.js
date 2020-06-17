@@ -9,8 +9,9 @@ const app = express()
 app.use(bodyParse.json())
 
 app.use(cors({
-  origin: ''
+  origin: '*'
 }))
+
 
 app.use('/', router)
 

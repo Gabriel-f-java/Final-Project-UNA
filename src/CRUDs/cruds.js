@@ -29,17 +29,30 @@ async function inserirPessoa(nome, rg, cpf, data_nascimento){
 }
 
 async function loginUser(login){
-    const insertQuery = {
-        text: 'Select * from usuarios where login = $1',
+    const selectQuery = {
+        text: 'SELECT * FROM usuarios where login = $1 ',
         values: [login],
     }
 
-    let client = await conexao.pool.connect();
-    let resultado = await client.query(insertQuery);
+    const promise = new Promise((resolve, reject) => {
+        conexao.pool.connect((err, client, release) => {
 
-    client.release();
+            if (err) {
+                console.error('Error acquiring client', err.stack)
+            }
+            client.query(selectQuery, (err, result) => {
+                if (err) {
+                    console.error('Error executing query', err.stack)
+                    reject(err)
+                }
+                else {
+                    resolve(result.rows);
+                }
+            })
 
-    return resultado;
+        })
+    })
+    return promise;
 }
 
 

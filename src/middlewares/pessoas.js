@@ -7,7 +7,7 @@ async function inserePessoa(req, res, next){
         req.body['status'] = {"Message" : "Sucesso!"}
     }
     catch(error){
-        req.body['status'] = {}
+        req.body['status'] = {"Message" : "Erro ao cadastrar!"}
     }
 
     next()
