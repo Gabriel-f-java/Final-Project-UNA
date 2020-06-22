@@ -1,6 +1,6 @@
-const response = require('../middlewares/usuario')
+const response = require('../middlewares/produto')
 
-async function realizaRes(req, res, next){
+async function realizaResProduto(req, res, next){
     if(req.body.status){
         res.status(200).send({"Message": "Cadastro realizado"})
     }
@@ -9,4 +9,4 @@ async function realizaRes(req, res, next){
     }
 }
 
-module.exports = { realizaRes }
+module.exports = { realizaResProduto }

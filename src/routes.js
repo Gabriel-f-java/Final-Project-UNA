@@ -18,4 +18,50 @@ router.post('/login/usuario',
     login.loginUsuario
 )
 
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
+
+
+const cadastroCategoria = require('./middlewares/categoria')
+const resendCategoria = require('./controller/resendCategoria')
+
+router.post('/categoria/cadastro',
+    cadastroCategoria.insereCategoria,
+    resendCategoria.realizaResCategoria
+)
+
+const selecionarCategoria = require('./middlewares/categoria')
+
+router.get('/categoria/selecionar',
+    selecionarCategoria.selectCategoria,
+    resendCategoria.realizaResGetCategoria
+)
+
+
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
+
+
+const cadastroEmpresa = require('./middlewares/empresa')
+
+router.post('/empresa/cadastro',
+    cadastroEmpresa.insereEmpresa
+)
+
+const selectEmpresa = require('./middlewares/empresa')
+
+router.get('/empresa/selecionar',
+    selectEmpresa.selectEmpresa
+)
+
+//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
+
+
+const cadastroProduto = require('./middlewares/produto')
+
+router.post('/produto/cadastro',
+    cadastroProduto.insereProduto
+)
+
 module.exports = router

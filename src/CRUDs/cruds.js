@@ -55,5 +55,72 @@ async function loginUser(login){
     return promise;
 }
 
+async function inserirCategoria(descricao){
+    const insertQuery = {
+        text: 'INSERT INTO categoria(descricao) VALUES($1) RETURNING id_categoria',
+        values: [descricao],
+    }
 
-module.exports = { inserirUsuario, inserirPessoa, loginUser }
+    let client = await conexao.pool.connect();
+    let resultado = await client.query(insertQuery);
+
+    client.release();
+
+    return resultado;
+}
+
+async function findAllCategoria(){
+    const SelectQuery = {
+        text: 'SELECT * FROM categoria'
+    }
+
+    let client = await conexao.pool.connect();
+    let resultado = await client.query(SelectQuery);
+
+    client.release();
+
+    return resultado;
+}
+
+async function inserirEmpresa(nome, cnpj, data_cadastro){
+    const insertQuery = {
+        text: 'INSERT INTO empresa(nome, cnpj, data_cadastro) VALUES($1, $2, $3) RETURNING id_empresa',
+        values: [nome, cnpj, data_cadastro],
+    }
+
+    let client = await conexao.pool.connect();
+    let resultado = await client.query(insertQuery);
+
+    client.release();
+
+    return resultado;
+}
+
+async function findAllEmpresa(){
+    const selectQuery = {
+        text: 'SELECT * FROM empresa'
+    }
+
+    let client = await conexao.pool.connect();
+    let resultado = await client.query(selectQuery);
+
+    client.release();
+
+    return resultado;
+}
+
+async function inserirProduto(nome, valor, id_empresa, id_categoria){
+    const insertQuery = {
+        text: 'INSERT INTO produto(nome, valor, id_empresa, id_categoria) VALUES($1, $2, $3, $4) RETURNING id_produto',
+        values: [nome, valor, id_empresa, id_categoria],
+    }
+
+    let client = await conexao.pool.connect();
+    let resultado = await client.query(insertQuery);
+
+    client.release();
+
+    return resultado;
+}
+
+module.exports = { inserirUsuario, inserirPessoa, loginUser, inserirCategoria, inserirEmpresa, inserirProduto, findAllCategoria, findAllEmpresa }
